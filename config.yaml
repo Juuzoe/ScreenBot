@@ -1,0 +1,8 @@
+# Default runtime configuration
+condition:
+  template_path: assets/example_template.png
+  confidence: 0.9
+action:
+  type: click
+region: null
+dry_run: false

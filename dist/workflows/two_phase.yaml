@@ -1,0 +1,215 @@
+defaults:
+  monitor_index: 1
+  region: null
+  poll_interval_ms: 120
+  max_wait_seconds: 25
+  dry_run: false
+
+phase1:
+  repeats: 20
+  steps:
+
+    - name: "P1 Start"
+      pre_wait_ms: 180               # small settle time helps live UI glow/AA
+      relax_on_timeout: true
+      prepark: band
+      condition:
+        type: "template"
+        template_path: "assets/btn_start.png"
+        confidence: 0.80
+        multiscale:
+          enabled: true
+          scales: [0.80, 0.85, 0.90, 0.95, 1.00, 1.05, 1.10]
+          pick: "best"
+        require_green: true            # color gate to avoid off-targets
+        # Optional debug (creates debug_misses/*.png on miss):
+        # debug: { save_on_miss: true, dir: "debug_misses" }
+      action:
+        type: "approach_click"
+        click_where: "match-center"
+        ensure_focus: true             # forces focus + held click on first press
+        humanize:
+          duration_range: [0.06, 0.10]
+          hover_jitter_px: 1
+          hover_jitter_ms: 60
+          mistake_chance: 0.002
+          approach_band_px: [24, 160]
+          approach_y: "near"
+
+
+    - name: "P1 Next 1"
+      condition:
+        type: "template"
+        template_path: "assets/btn_next1.png"
+        confidence: 0.90
+        multiscale: { enabled: true, scales: [0.95, 1.0, 1.05], pick: "best" }
+      action: { type: "click", click_where: "match-center" }
+
+    - name: "P1 Next 2"
+      condition:
+        type: "template"
+        template_path: "assets/btn_next2.png"
+        confidence: 0.90
+        multiscale: { enabled: true, scales: [0.95, 1.0, 1.05], pick: "best" }
+      action: { type: "click", click_where: "match-center" }
+
+    - name: "P1 Next 3"
+      condition:
+        type: "template"
+        template_path: "assets/btn_next3.png"
+        confidence: 0.90
+        multiscale: { enabled: true, scales: [0.95, 1.0, 1.05], pick: "best" }
+      action: { type: "click", click_where: "match-center" }
+
+    - name: "P1 Next 4"
+      condition:
+        type: "template"
+        template_path: "assets/btn_next4.png"
+        confidence: 0.90
+        multiscale: { enabled: true, scales: [0.95, 1.0, 1.05], pick: "best" }
+      action: { type: "click", click_where: "match-center" }
+
+    - name: "P1 Next 5"
+      condition:
+        type: "template"
+        template_path: "assets/btn_next5.png"
+        confidence: 0.90
+        multiscale: { enabled: true, scales: [0.95, 1.0, 1.05], pick: "best" }
+      action: { type: "click", click_where: "match-center" }
+
+    - name: "P1 Next 6"
+      condition:
+        type: "template"
+        template_path: "assets/btn_next6.png"
+        confidence: 0.90
+        multiscale: { enabled: true, scales: [0.95, 1.0, 1.05], pick: "best" }
+      action: { type: "click", click_where: "match-center" }
+
+    - name: "P1 Next 7"
+      condition:
+        type: "template"
+        template_path: "assets/btn_next7.png"
+        confidence: 0.90
+        multiscale: { enabled: true, scales: [0.95, 1.0, 1.05], pick: "best" }
+      action: { type: "click", click_where: "match-center" }
+
+phase2:
+  repeats: 20
+  steps:
+    - name: "P2 Start"
+      relax_on_timeout: true
+      prepark: band
+      condition:
+        type: "template"
+        template_path: "assets/p2_btn_start.png"
+        confidence: 0.90
+        multiscale: { enabled: true, scales: [0.90, 0.95, 1.0, 1.05, 1.10], pick: "best" }
+      action:
+        type: "approach_click"
+        click_where: "match-center"
+        humanize:
+          duration_range: [0.06, 0.10]
+          hover_jitter_px: 1
+          hover_jitter_ms: 60
+          mistake_chance: 0.002
+          approach_band_px: [24, 160]
+          approach_y: "near"
+
+    - { name: "P2 Next 1",
+        condition: { type: "template", template_path: "assets/p2_btn_next1.png", confidence: 0.90,
+                     multiscale: { enabled: true, scales: [0.95, 1.0, 1.05], pick: "best" } },
+        action: { type: "click", click_where: "match-center" } }
+
+    - { name: "P2 Next 2",
+        condition: { type: "template", template_path: "assets/p2_btn_next2.png", confidence: 0.90,
+                     multiscale: { enabled: true, scales: [0.95, 1.0, 1.05], pick: "best" } },
+        action: { type: "click", click_where: "match-center" } }
+
+    - name: "P2 Next 3"
+      relax_on_timeout: true
+      prepark: band
+      condition:
+        type: "template"
+        template_path: "assets/p2_btn_next3.png"
+        confidence: 0.90
+        multiscale: { enabled: true, scales: [0.95, 1.0, 1.05], pick: "best" }
+      action:
+        type: "approach_click"
+        click_where: "match-center"
+        humanize:
+          duration_range: [0.06, 0.10]
+          hover_jitter_px: 1
+          hover_jitter_ms: 60
+          mistake_chance: 0.002
+
+    - { name: "P2 Next 4",
+        condition: { type: "template", template_path: "assets/p2_btn_next4.png", confidence: 0.90,
+                     multiscale: { enabled: true, scales: [0.95, 1.0, 1.05], pick: "best" } },
+        action: { type: "click", click_where: "match-center" } }
+
+    # Right-half restriction for duplicated button
+    - name: "P2 Next 6 (right)"
+      region: [960, 0, 960, 1080]   # adjust for your resolution
+      condition:
+        type: "template"
+        template_path: "assets/p2_btn_next6.png"
+        confidence: 0.90
+        multiscale: { enabled: true, scales: [0.95, 1.0, 1.05], pick: "best" }
+      action: { type: "click", click_where: "match-center" }
+
+    - { name: "P2 Next 7",
+        condition: { type: "template", template_path: "assets/p2_btn_next7.png", confidence: 0.90,
+                     multiscale: { enabled: true, scales: [0.95, 1.0, 1.05], pick: "best" } },
+        action: { type: "click", click_where: "match-center" } }
+
+    - name: "P2 Next 8"
+      relax_on_timeout: true
+      prepark: band
+      condition:
+        type: "template"
+        template_path: "assets/p2_btn_next8.png"
+        confidence: 0.90
+        multiscale: { enabled: true, scales: [0.95, 1.0, 1.05], pick: "best" }
+      action:
+        type: "approach_click"
+        click_where: "match-center"
+        humanize:
+          duration_range: [0.06, 0.10]
+          hover_jitter_px: 1
+          hover_jitter_ms: 60
+          mistake_chance: 0.002
+
+    - { name: "P2 Next 9",
+        condition: { type: "template", template_path: "assets/p2_btn_next9.png", confidence: 0.90,
+                     multiscale: { enabled: true, scales: [0.95, 1.0, 1.05], pick: "best" } },
+        action: { type: "click", click_where: "match-center" } }
+
+    - { name: "P2 Next 10",
+        condition: { type: "template", template_path: "assets/p2_btn_next10.png", confidence: 0.90,
+                     multiscale: { enabled: true, scales: [0.95, 1.0, 1.05], pick: "best" } },
+        action: { type: "click", click_where: "match-center" } }
+
+    - { name: "P2 Next 11",
+        condition: { type: "template", template_path: "assets/p2_btn_next11.png", confidence: 0.90,
+                     multiscale: { enabled: true, scales: [0.95, 1.0, 1.05], pick: "best" } },
+        action: { type: "click", click_where: "match-center" } }
+
+    - { name: "P2 Next 12",
+        condition: { type: "template", template_path: "assets/p2_btn_next12.png", confidence: 0.90,
+                     multiscale: { enabled: true, scales: [0.95, 1.0, 1.05], pick: "best" } },
+        action: { type: "click", click_where: "match-center" } }
+
+    - { name: "P2 Next 13",
+        condition: { type: "template", template_path: "assets/p2_btn_next13.png", confidence: 0.90,
+                     multiscale: { enabled: true, scales: [0.95, 1.0, 1.05], pick: "best" } },
+        action: { type: "click", click_where: "match-center" } }
+
+    - { name: "P2 Next 14",
+        condition: { type: "template", template_path: "assets/p2_btn_next14.png", confidence: 0.90,
+                     multiscale: { enabled: true, scales: [0.95, 1.0, 1.05], pick: "best" } },
+        action: { type: "click", click_where: "match-center" } }
+
+    - { name: "P2 Next 15",
+        condition: { type: "template", template_path: "assets/p2_btn_next15.png", confidence: 0.90,
+                     multiscale: { enabled: true, scales: [0.95, 1.0, 1.05], pick: "best" } },
+        action: { type: "click", click_where: "match-center" } }
