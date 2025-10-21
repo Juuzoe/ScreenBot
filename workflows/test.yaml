@@ -1,0 +1,72 @@
+# ==========================================
+# This is a sample ScreenBot yaml
+#------------------------------------------
+# This file shows how to tell ScreenBot
+# what to do, step by step.
+#
+#
+# You can copy and edit this file to make
+# your own automations later.
+#
+# But generally I made it as a guide to follow, its best to create one from scratch for your own needs
+# ------------------------------------------
+
+defaults:
+  # how often to look at the screen (in milliseconds)
+  poll_interval_ms: 200
+
+  # give up after this many seconds if nothing is found
+  max_wait_seconds: 10
+
+  # set dry_run: true if you just want to
+  # watch logs without real clicks.
+  dry_run: false
+
+# ------------------------------------------
+# Each "phase" is a small routine that repeats.
+# You can have one or many of them.
+##for conviniece name "phase1", "phase2", etc.
+# ------------------------------------------
+phases:
+  demo_phase:
+    name: "Simple button test"
+
+    # how many times to run this group of actions
+    repeats: 3
+
+    # these add random pauses so it feels human
+    step_min_sec: 0.5
+    step_max_sec: 0.6
+    cycle_min_sec: 1.0
+    cycle_max_sec: 1.2
+
+    # what bot does each time
+    steps:
+      - name: "Click first button"
+        condition:
+          template_path: assets/button1.png  # what to look for on screen
+          confidence: 0.9                   # how sure bot needs to be (0–1)
+        action:
+          type: click                       # what to do when bot founds it
+
+      - name: "Click second button"
+        condition:
+          template_path: assets/button2.png
+          confidence: 0.9
+        action:
+          type: click
+
+      - name: "Click third button"
+        condition:
+          template_path: assets/button3.png
+          confidence: 0.9
+        action:
+          type: click
+
+# ------------------------------------------
+# process:
+# - the bot looks for each image in order
+# - if it finds it, it clicks
+# - it waits a little between actions
+# - after all 3, it repeats the phase 3 times
+# ------------------------------------------
