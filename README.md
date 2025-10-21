@@ -4,7 +4,7 @@ This ScreenBot detects images on your screen and performs mouse actions that loo
 The movement is not purely time‑based — it uses small, randomised offsets, varied speeds, and micro‑delays to simulate real human behavior when moving or clicking.  
 The project was originally built for internal use but has been cleaned up for public release.
 
-# ScreenBot
+# Example
 <p align="center">
   <img src="media/demo.gif" alt="ScreenBot demo" width="600">
 </p>
